@@ -1,0 +1,28 @@
+{
+  "e const": {
+    "prefix": "econst",
+    "body": ["const ${1:name} = ${2:value}"],
+    "description": ""
+  },
+  "e arrow function": {
+    "prefix": "eaf",
+    "body": ["const ${1:name} = (${2:params}) => {", "  ${3:\"\"}", "}", ""],
+    "description": ""
+  },
+  "e useStyles": {
+    "prefix": "euseStyles",
+    "body": [
+      "const useStyles = createStyles((theme) => ({",
+      "  root: {",
+      "  $1    ",
+      "  }",
+      "}))"
+    ],
+    "description": ""
+  },
+  "e classes": {
+    "prefix": "eclasses",
+    "body": ["const { classes } = useStyles()"],
+    "description": ""
+  }
+}
