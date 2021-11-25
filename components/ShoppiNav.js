@@ -33,14 +33,14 @@ function ShoppiNav({ cartHandler }) {
           </Link>
         </Tooltip>
         <Tooltip label="history" color="dark" position="right" withArrow>
-          <Link href="/">
+          <Link href="/history">
             <Anchor>
               <Image src="icons/replay.svg" />
             </Anchor>
           </Link>
         </Tooltip>
         <Tooltip label="statistic" color="dark" position="right" withArrow>
-          <Link href="/">
+          <Link href="/statistics">
             <Anchor>
               <Image src="icons/poll.svg" />
             </Anchor>
