@@ -71,8 +71,9 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ShoppingPanel = ({ opened, toHandler, current }) => {
+const ShoppingPanel = ({ opened, toHandler, current, removeHandler }) => {
   const { classes, cx } = useStyles()
+
   return (
     <div
       className={cx(classes.root, classes.scroll)}
@@ -101,7 +102,11 @@ const ShoppingPanel = ({ opened, toHandler, current }) => {
           transitionDuration: "1s",
         }}
       >
-        {current == [] ? <ItemListPanel data={current} /> : <EmptyPanel />}
+        {current.length ? (
+          <ItemListPanel data={current} removeHandler={removeHandler} />
+        ) : (
+          <EmptyPanel />
+        )}
       </section>
     </div>
   )

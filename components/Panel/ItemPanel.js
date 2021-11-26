@@ -44,7 +44,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ListItem = ({ name, id, rmHandler }) => {
+const ListItem = ({ name, id, category, removeHandler }) => {
   const { classes } = useStyles()
   const [opened, settoggle] = useBooleanToggle(false)
   const [amout, setAmout] = useState(1)
@@ -60,8 +60,8 @@ const ListItem = ({ name, id, rmHandler }) => {
     setAmout(amout - 1)
   }
 
-  const removeItem = (target) => {
-    rmHandler(target)
+  const removeit = () => {
+    removeHandler(category, id)
   }
 
   return (
@@ -74,7 +74,7 @@ const ListItem = ({ name, id, rmHandler }) => {
             color="yellow"
             className={classes.deleteAction}
             onClick={() => {
-              removeItem(id)
+              removeit()
             }}
             styles={{ root: { minHeight: "42px", padding: "0" } }}
           >
@@ -117,11 +117,19 @@ const ListItem = ({ name, id, rmHandler }) => {
   )
 }
 
-function ItemPanel({ items, rmHandler }) {
+function ItemPanel({ items, category, removeHandler }) {
   return (
     <>
       {items.map((any) => {
-        return <ListItem key={any} id={any} rmHandler={rmHandler} name={any} />
+        return (
+          <ListItem
+            key={any.name}
+            id={any.id}
+            name={any.name}
+            category={category}
+            removeHandler={removeHandler}
+          />
+        )
       })}
     </>
   )
