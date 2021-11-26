@@ -1,4 +1,5 @@
 import { createStyles } from "@mantine/styles"
+import { Head } from "next/document"
 import React, { useState } from "react"
 
 const useStyles = createStyles((theme) => ({}))
@@ -11,7 +12,7 @@ function AppMainManager() {
 
   const { classes } = useStyles()
 
-  return <div></div>
+  return <div>ello</div>
 }
 
 export default AppMainManager

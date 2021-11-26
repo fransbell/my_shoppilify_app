@@ -8,10 +8,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <link rel="icon" href="icons/logo.svg" type="image/x-icon" />
-          <title>My Shoppilify | Manage Shop Enjoys</title>
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />
