@@ -106,6 +106,10 @@ function AppMainManager() {
       }
     })
     updated[idxRes[0]].lists.splice(idxRes[1], 1)
+    
+    if (!updated[idxRes[0]].lists.length) {
+      updated.splice(idxRes[0], 1)
+    }
 
     setcurrenItems([...updated])
   }
