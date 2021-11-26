@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react"
 import { Button, createStyles } from "@mantine/core"
 import ItemListPanel from "./ItemListPanel"
+import EmptyPanel from "./Main/EmptyPanel"
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -70,7 +71,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ShoppingPanel = forwardRef(({ opened, toHandler }, ref) => {
+const ShoppingPanel = ({ opened, toHandler, current }) => {
   const { classes, cx } = useStyles()
   return (
     <div
@@ -92,18 +93,18 @@ const ShoppingPanel = forwardRef(({ opened, toHandler }, ref) => {
         </section>
       </div>
       <section
-        ref={ref}
         style={{
           width: "100%",
+          height: "100%",
           padding: "16px",
           opacity: opened ? "1" : "0",
           transitionDuration: "1s",
         }}
       >
-        <ItemListPanel />
+        {current == [] ? <ItemListPanel data={current} /> : <EmptyPanel />}
       </section>
     </div>
   )
-})
+}
 
 export default ShoppingPanel

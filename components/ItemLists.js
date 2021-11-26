@@ -1,4 +1,11 @@
-import { Container, Text, createStyles, Input, Image } from "@mantine/core"
+import {
+  Container,
+  Text,
+  createStyles,
+  Input,
+  Image,
+  LoadingOverlay,
+} from "@mantine/core"
 import React, { forwardRef } from "react"
 import Category from "./Cards/Category"
 
@@ -38,6 +45,7 @@ const useStyles = createStyles((theme) => ({
     },
     margin: "0",
     flex: "1",
+    position: "relative",
   },
 }))
 
@@ -48,11 +56,12 @@ const items = [
   "Chicken",
   "Pre Cooked Pork ",
 ]
-const ItemLists = forwardRef((props, ref) => {
+
+const ItemLists = ({ data }) => {
   const { classes } = useStyles()
+  const contents = data ? data : []
   return (
     <Container
-      ref={ref}
       className={classes.scroll}
       size="100%"
       style={{ overflowY: "scroll", padding: "16px 0" }}
@@ -70,11 +79,19 @@ const ItemLists = forwardRef((props, ref) => {
           />
         </Container>
       </Container>
-      <Category name="Fruit and vegetables" itemlist={items} />
-      <Category name="Fruit and vegetables" itemlist={items} />
-      <Category name="Fruit and vegetables" itemlist={items} />
+      {!data ? <LoadingOverlay visible={true} /> : ""}
+
+      {contents.map((item) => {
+        return (
+          <Category
+            key={item.category}
+            name={item.category}
+            itemlist={item.items}
+          />
+        )
+      })}
     </Container>
   )
-})
+}
 
 export default ItemLists

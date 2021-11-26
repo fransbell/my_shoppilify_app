@@ -23,7 +23,14 @@ function Category({ itemlist, name }) {
         ]}
       >
         {itemlist.map((item) => {
-          return <Item key={item} name={item} />
+          return (
+            <Item
+              key={item.name}
+              category={name}
+              id={item.id}
+              name={item.name}
+            />
+          )
         })}
       </SimpleGrid>
     </Container>

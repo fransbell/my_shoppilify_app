@@ -27,11 +27,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-function Item({ name }) {
+function Item({ name, category, id }) {
   const { classes } = useStyles()
 
-  const clickHanlder = () => {
-    console.log("clicked")
+  const clickHanlder = (ev) => {
+    console.log(category, id)
   }
 
   return (
