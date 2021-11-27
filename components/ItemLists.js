@@ -6,7 +6,7 @@ import {
   Image,
   LoadingOverlay,
 } from "@mantine/core"
-import React, { forwardRef } from "react"
+import React, { useState, useEffect } from "react"
 import Category from "./Cards/Category"
 
 const useStyles = createStyles((theme) => ({
@@ -49,17 +49,20 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const items = [
-  "Avocado",
-  "Banana dada tulnanna",
-  "Carrot",
-  "Chicken",
-  "Pre Cooked Pork ",
-]
-
-const ItemLists = ({ data, addHandler }) => {
+const ItemLists = ({ data, addHandler, searchHandler }) => {
   const { classes } = useStyles()
   const contents = data ? data : []
+  const [searchTerm, setsearchTerm] = useState("")
+
+  const searchContent = <div>finding</div>
+
+  useEffect(() => {
+    const searchFilter = [...data]
+    let allitems = searchFilter.map((obj) => {
+      obj.items.map((item) => {})
+    })
+  }, [searchTerm])
+
   return (
     <Container
       className={classes.scroll}
@@ -76,9 +79,13 @@ const ItemLists = ({ data, addHandler }) => {
             icon={<Image width="50%" src="/icons/search.svg" />}
             placeholder="Search item"
             radius="sm"
+            onChange={(ev) => {
+              setsearchTerm(ev.target.value)
+            }}
           />
         </Container>
       </Container>
+
       {data == false ? <LoadingOverlay visible={true} /> : ""}
 
       {contents.map((item) => {

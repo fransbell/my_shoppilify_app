@@ -60,10 +60,13 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }))
-const NewItemPanel = ({ toHandler }) => {
+const NewItemPanel = ({ panelHandler, opened }) => {
   const { classes, cx } = useStyles()
   return (
-    <div className={cx(classes.root, classes.scroll)}>
+    <div
+      className={cx(classes.root, classes.scroll)}
+      style={{ width: opened ? "30%" : "0" }}
+    >
       <Container size="lg" m="0">
         <Text>Add a new item</Text>
         <InputWrapper label="Name">
@@ -93,7 +96,7 @@ const NewItemPanel = ({ toHandler }) => {
       </Container>
 
       <Container className={classes.control}>
-        <Button onClick={() => toHandler()}>cancel</Button>
+        <Button onClick={() => panelHandler("shoppingList")}>cancel</Button>
         <Button color="yellow">Save</Button>
       </Container>
     </div>

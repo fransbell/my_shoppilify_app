@@ -71,7 +71,13 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ShoppingPanel = ({ opened, toHandler, current, removeHandler }) => {
+const ShoppingPanel = ({
+  opened,
+  current,
+  removeHandler,
+  itemHandler,
+  panelHandler,
+}) => {
   const { classes, cx } = useStyles()
 
   return (
@@ -86,7 +92,7 @@ const ShoppingPanel = ({ opened, toHandler, current, removeHandler }) => {
           <Button
             variant="white"
             onClick={() => {
-              toHandler()
+              panelHandler("newitem")
             }}
           >
             Add item
@@ -103,7 +109,11 @@ const ShoppingPanel = ({ opened, toHandler, current, removeHandler }) => {
         }}
       >
         {current.length ? (
-          <ItemListPanel data={current} removeHandler={removeHandler} />
+          <ItemListPanel
+            data={current}
+            removeHandler={removeHandler}
+            itemHandler={itemHandler}
+          />
         ) : (
           <EmptyPanel />
         )}

@@ -1,8 +1,7 @@
 import React from "react"
 import CategoryPanel from "./CategoryPanel"
-import mockdata from "./mockdata"
 
-const ItemListPanel = ({ data, removeHandler }) => {
+const ItemListPanel = ({ data, removeHandler, itemHandler }) => {
   return (
     <>
       {data.map((item) => {
@@ -12,6 +11,7 @@ const ItemListPanel = ({ data, removeHandler }) => {
             name={item.name}
             items={item.lists}
             removeHandler={removeHandler}
+            itemHandler={itemHandler}
           />
         )
       })}

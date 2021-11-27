@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useState } from "react"
 import ItemLists from "./ItemLists"
 import ShoppiNav from "./ShoppiNav"
 import ShoppingPanel from "./Panel/ShoppingPanel"
+import NewItemPanel from "./Panel/Main/NewItemPanel"
+import DetailPanel from "./Panel/Main/DetailPanel"
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -32,6 +34,8 @@ function AppMainManager() {
 
   const [opened, setopened] = useState(true)
 
+  const [activePanel, setactivePanel] = useState("shoppingList")
+
   const { classes } = useStyles()
 
   const addHandler = (category, name, id) => {
@@ -45,7 +49,6 @@ function AppMainManager() {
         },
       ]
       setcurrenItems([...updated])
-      console.log("add firtst item")
       return
     }
 
@@ -75,8 +78,6 @@ function AppMainManager() {
       }
     })
 
-    console.log(isChanged)
-
     if (isChanged) {
       setcurrenItems([...updated])
     } else {
@@ -88,18 +89,23 @@ function AppMainManager() {
     }
   }
 
-  function removeHandler(category, itemid) {
-    const updated = currenItems
+  function getIndexPair(lists, category, id) {
     let idxRes
-    updated.findIndex((obj, idx) => {
+    lists.findIndex((obj, idx) => {
       if (obj.name == category) {
         const res = obj.lists.findIndex((item, itx) => {
-          if (item.id == itemid) {
+          if (item.id == id) {
             idxRes = [idx, itx]
           }
         })
       }
     })
+    return idxRes
+  }
+
+  function removeHandler(category, itemid) {
+    const updated = currenItems
+    let idxRes = getIndexPair(updated, category, itemid)
     updated[idxRes[0]].lists.splice(idxRes[1], 1)
 
     if (!updated[idxRes[0]].lists.length) {
@@ -109,6 +115,32 @@ function AppMainManager() {
     setcurrenItems([...updated])
   }
 
+  const itemIncrement = (category, id) => {
+    const updated = currenItems
+    let idxRes = getIndexPair(updated, category, id)
+    const [a, b] = idxRes
+    updated[a].lists[b].amount++
+    setcurrenItems([...updated])
+  }
+  const itemDecrement = (category, id) => {
+    const updated = currenItems
+    let idxRes = getIndexPair(updated, category, id)
+    const [a, b] = idxRes
+    if (updated[a].lists[b].amount - 1 > 0) {
+      updated[a].lists[b].amount--
+    }
+    setcurrenItems([...updated])
+  }
+
+  const itemHandler = {
+    increment: itemIncrement,
+    decrement: itemDecrement,
+  }
+
+  const searchHandler = (data) => {
+    console.log(data)
+  }
+
   useEffect(() => {
     const datas = fetch("/api/itemlist")
       .then((response) => response.json())
@@ -116,6 +148,33 @@ function AppMainManager() {
         return setitemlist(data.itemlists)
       })
   }, [])
+
+  let Panel
+
+  const panelHandler = (target) => {
+    console.log(target)
+    setactivePanel(target)
+  }
+
+  switch (activePanel) {
+    case "shoppingList":
+      Panel = (
+        <ShoppingPanel
+          opened={opened}
+          current={currenItems}
+          removeHandler={removeHandler}
+          itemHandler={itemHandler}
+          panelHandler={panelHandler}
+        />
+      )
+      break
+    case "newitem":
+      Panel = <NewItemPanel opened={opened} panelHandler={panelHandler} />
+      break
+    case "detail":
+      Panel = <DetailPanel panelHandler={panelHandler} />
+      break
+  }
 
   return (
     <MediaQuery query="(min-width: 768px)" styles={{ paddingLeft: "74px" }}>
@@ -134,12 +193,12 @@ function AppMainManager() {
           />
         }
       >
-        <ItemLists data={itemlist} addHandler={addHandler} />
-        <ShoppingPanel
-          opened={opened}
-          current={currenItems}
-          removeHandler={removeHandler}
+        <ItemLists
+          data={itemlist}
+          addHandler={addHandler}
+          searchHandler={searchHandler}
         />
+        {Panel}
       </AppShell>
     </MediaQuery>
   )

@@ -41,6 +41,8 @@ function Item({ name, category, id, addHandler }) {
       shadow="md"
       radius="lg"
       withBorder
+      style={{ cursor: "pointer" }}
+      onClick={() => console.log(category, name, id)}
     >
       <Text component="p" size="lg" component="p" m="0">
         {name}

@@ -45,24 +45,27 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ListItem = ({ name, id, category, removeHandler, value }) => {
+const ListItem = ({
+  name,
+  id,
+  category,
+  value,
+  removeHandler,
+  itemHandler,
+}) => {
   const { classes } = useStyles()
   const [opened, settoggle] = useBooleanToggle(false)
-  const [amout, setAmout] = useState(1)
   const ref = useClickOutside(() => settoggle(false))
-
-  const increment = () => {
-    setAmout(amout + 1)
-  }
-  const decrement = () => {
-    if (amout - 1 < 1) {
-      return
-    }
-    setAmout(amout - 1)
-  }
 
   const removeit = () => {
     removeHandler(category, id)
+  }
+
+  const increment = () => {
+    itemHandler.increment(category, id)
+  }
+  const decrement = () => {
+    itemHandler.decrement(category, id)
   }
 
   return (
@@ -118,7 +121,7 @@ const ListItem = ({ name, id, category, removeHandler, value }) => {
   )
 }
 
-function ItemPanel({ items, category, removeHandler }) {
+function ItemPanel({ items, category, removeHandler, itemHandler }) {
   return (
     <>
       {items.map((any) => {
@@ -130,6 +133,7 @@ function ItemPanel({ items, category, removeHandler }) {
             category={category}
             value={any.amount}
             removeHandler={removeHandler}
+            itemHandler={itemHandler}
           />
         )
       })}

@@ -2,7 +2,7 @@ import { Text } from "@mantine/core"
 import React, { useState } from "react"
 import ItemPanel from "./ItemPanel"
 
-function CategoryPanel({ name, items, removeHandler }) {
+function CategoryPanel({ name, items, removeHandler, itemHandler }) {
   return (
     <>
       {items.length ? (
@@ -19,6 +19,7 @@ function CategoryPanel({ name, items, removeHandler }) {
             items={items}
             category={name}
             removeHandler={removeHandler}
+            itemHandler={itemHandler}
           />
         </>
       ) : (

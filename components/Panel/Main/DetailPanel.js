@@ -63,14 +63,14 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const DetailPanel = () => {
+const DetailPanel = ({ panelHandler }) => {
   const { classes, cx } = useStyles()
   return (
     <div className={cx(classes.root, classes.scroll)}>
       <Container mx="0" my="1rem" className={classes.container}>
         <Text
           onClick={() => {
-            alert("back to shopping")
+            panelHandler("shoppingList")
           }}
           m="0"
           component="p"
