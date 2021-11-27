@@ -2,7 +2,7 @@ import { Container, SimpleGrid, Text } from "@mantine/core"
 import Item from "./Item"
 import React from "react"
 
-function Category({ itemlist, name }) {
+function Category({ itemlist, name, addHandler }) {
   return (
     <Container size="100%">
       <Text
@@ -29,6 +29,7 @@ function Category({ itemlist, name }) {
               category={name}
               id={item.id}
               name={item.name}
+              addHandler={addHandler}
             />
           )
         })}

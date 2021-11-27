@@ -57,7 +57,7 @@ const items = [
   "Pre Cooked Pork ",
 ]
 
-const ItemLists = ({ data }) => {
+const ItemLists = ({ data, addHandler }) => {
   const { classes } = useStyles()
   const contents = data ? data : []
   return (
@@ -79,7 +79,7 @@ const ItemLists = ({ data }) => {
           />
         </Container>
       </Container>
-      {!data ? <LoadingOverlay visible={true} /> : ""}
+      {data == false ? <LoadingOverlay visible={true} /> : ""}
 
       {contents.map((item) => {
         return (
@@ -87,6 +87,7 @@ const ItemLists = ({ data }) => {
             key={item.category}
             name={item.category}
             itemlist={item.items}
+            addHandler={addHandler}
           />
         )
       })}

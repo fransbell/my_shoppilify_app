@@ -73,7 +73,6 @@ const useStyles = createStyles((theme) => ({
 
 const ShoppingPanel = ({ opened, toHandler, current, removeHandler }) => {
   const { classes, cx } = useStyles()
-  console.log(current)
 
   return (
     <div

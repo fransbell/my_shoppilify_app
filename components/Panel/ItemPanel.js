@@ -26,7 +26,8 @@ const useStyles = createStyles((theme) => ({
   },
   optionSection: {
     background: "#fff",
-    position: "relative",
+    position: "absolute",
+    right: "0",
     width: "auto",
     padding: "8px 0 8px 42px",
     borderRadius: "8px",
@@ -44,7 +45,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const ListItem = ({ name, id, category, removeHandler }) => {
+const ListItem = ({ name, id, category, removeHandler, value }) => {
   const { classes } = useStyles()
   const [opened, settoggle] = useBooleanToggle(false)
   const [amout, setAmout] = useState(1)
@@ -97,7 +98,7 @@ const ListItem = ({ name, id, category, removeHandler }) => {
           ""
         )}
         <Button variant="outline" onClick={() => settoggle()} width="auto">
-          {amout} pcs
+          {value} pcs
         </Button>
         {opened ? (
           <Button
@@ -127,6 +128,7 @@ function ItemPanel({ items, category, removeHandler }) {
             id={any.id}
             name={any.name}
             category={category}
+            value={any.amount}
             removeHandler={removeHandler}
           />
         )

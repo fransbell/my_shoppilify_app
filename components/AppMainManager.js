@@ -28,26 +28,7 @@ const useStyles = createStyles((theme) => ({
 function AppMainManager() {
   const [itemlist, setitemlist] = useState([])
 
-  const [currenItems, setcurrenItems] = useState([
-    {
-      name: "fruitsata",
-      lists: [
-        { id: 0, name: "Avocadoa", amount: 1 },
-        { id: 1, name: "Bananaa", amount: 1 },
-        { id: 2, name: "Pre Cooked Porka", amount: 1 },
-        { id: 3, name: "Water melona", amount: 1 },
-      ],
-    },
-    {
-      name: "fruits",
-      lists: [
-        { id: 0, name: "Avocado", amount: 1 },
-        { id: 1, name: "Banana", amount: 1 },
-        { id: 2, name: "Pre Cooked Pork", amount: 1 },
-        { id: 3, name: "Water melon", amount: 1 },
-      ],
-    },
-  ])
+  const [currenItems, setcurrenItems] = useState([])
 
   const [opened, setopened] = useState(true)
 
@@ -63,34 +44,48 @@ function AppMainManager() {
           lists: [{ id: id, name: name, amount: 1 }],
         },
       ]
-      setcurrenItems(updated)
-      console.log(currenItems)
+      setcurrenItems([...updated])
+      console.log("add firtst item")
       return
     }
-    const tmp = updated
+
+    let isChanged = false
     // current is existing
     updated.map((item) => {
       const data = item
       // catalog existed
       if (item.name === category) {
-        data.lists.push({ id: id, name: name, amount: 1 })
+        let item
+
+        data.lists.findIndex((obj) => {
+          if (obj.id == id) {
+            item = obj
+          }
+        })
+
+        if (item) {
+          item.amount++
+          isChanged = true
+        } else {
+          data.lists.push({ id: id, name: name, amount: 1 })
+          isChanged = true
+        }
+
         return data
       }
     })
 
-    if (updated !== tmp) {
-      setcurrenItems(updated)
-      return
-    }
+    console.log(isChanged)
 
-    /* if (updated == tmp) {
+    if (isChanged) {
+      setcurrenItems([...updated])
+    } else {
       updated.push({
         name: category,
-        lists: [{ id: id, name: name, amout: 1 }],
+        lists: [{ id: id, name: name, amount: 1 }],
       })
+      setcurrenItems([...updated])
     }
-    setcurrenItems(updated)
-    return */
   }
 
   function removeHandler(category, itemid) {
@@ -106,7 +101,7 @@ function AppMainManager() {
       }
     })
     updated[idxRes[0]].lists.splice(idxRes[1], 1)
-    
+
     if (!updated[idxRes[0]].lists.length) {
       updated.splice(idxRes[0], 1)
     }
@@ -139,14 +134,7 @@ function AppMainManager() {
           />
         }
       >
-        <Button
-          onClick={() => {
-            addHandler("fruits and vegs", "avocado", 0)
-          }}
-        >
-          add
-        </Button>
-        <ItemLists data={itemlist} />
+        <ItemLists data={itemlist} addHandler={addHandler} />
         <ShoppingPanel
           opened={opened}
           current={currenItems}
